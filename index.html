@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Follow-up de Indicações Pro</title>
+  <style>
+    * { box-sizing: border-box; }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #1a202c;
+      line-height: 1.5;
+    }
+
+    /* Header com glassmorphism */
+    header {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 20px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .stats-header {
+      display: flex;
+      gap: 20px;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      backdrop-filter: blur(5px);
+    }
+
+    .stat-number {
+      font-size: 20px;
+      font-weight: 700;
+      display: block;
+    }
+
+    /* Container principal */
+    .container {
+      padding: 24px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Cards com sombras profissionais */
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      padding: 24px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #f7fafc;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #2d3748;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Grid system responsivo */
+    .grid { display: grid; gap: 20px; }
+    .grid-2 { grid-template-columns: 1fr 1fr; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-main { grid-template-columns: 2fr 1fr; }
+
+    @media (max-width: 768px) {
+      .grid-2, .grid-3, .grid-main { grid-template-columns: 1fr; }
+    }
+
+    /* Form inputs modernos */
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .form-row > * {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    label {
+      font-size: 13px;
+      font-weight: 500;
+      color: #4a5568;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      background: #fff;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      transform: translateY(-1px);
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    /* Botões modernos */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+      background: #f7fafc;
+      color: #4a5568;
+      border: 2px solid #e2e8f0;
+    }
+
+    .btn-secondary:hover {
+      background: #edf2f7;
+      border-color: #cbd5e0;
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+      color: #fff;
+    }
+
+    .btn-warning {
+      background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+      color: #fff;
+    }
+
+    .btn-whatsapp {
+      background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+      color: #fff;
+    }
+
+    /* Tabela moderna */
+    .table-container {
+      overflow: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      max-height: 500px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: #fff;
+    }
+
+    th {
+      background: #f8fafc;
+      color: #4a5568;
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 16px 12px;
+      position: sticky;
+      top: 0;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    td {
+      padding: 16px 12px;
+      border-bottom: 1px solid #f1f5f9;
+      background: #fff;
+    }
+
+    tr:hover td {
+      background: #f8fafc;
+    }
+
+    /* Status pills melhorados */
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-novo { background: #bee3f8; color: #2c5282; }
+    .status-conversa { background: #fbb6ce; color: #97266d; }
+    .status-aguardando { background: #fbd38d; color: #975a16; }
+    .status-fechado { background: #9ae6b4; color: #276749; }
+    .status-sem-interesse { background: #fed7d7; color: #9b2c2c; }
+
+    /* Prioridade visual */
+    .priority-high { border-left: 4px solid #e53e3e; }
+    .priority-medium { border-left: 4px solid #ed8936; }
+    .priority-low { border-left: 4px solid #48bb78; }
+
+    /* Detalhes do lead */
+    .lead-details {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 16px 0;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .detail-label {
+      font-weight: 500;
+      color: #4a5568;
+    }
+
+    .detail-value {
+      color: #2d3748;
+      font-weight: 400;
+    }
+
+    /* Histórico de tratativas */
+    .history-item {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    .history-item::before {
+      content: '';
+      position: absolute;
+      left: -8px;
+      top: 20px;
+      width: 16px;
+      height: 16px;
+      background: #667eea;
+      border-radius: 50%;
+      border: 3px solid #fff;
+    }
+
+    .history-type {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #667eea;
+      margin-bottom: 4px;
+    }
+
+    .history-date {
+      font-size: 12px;
+      color: #718096;
+      margin-bottom: 8px;
+    }
+
+    .history-content {
+      color: #2d3748;
+      line-height: 1.5;
+    }
+
+    /* Upload área */
+    .upload-area {
+      border: 2px dashed #cbd5e0;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      background: #f8fafc;
+      transition: all 0.2s ease;
+    }
+
+    .upload-area:hover {
+      border-color: #667eea;
+      background: #f0f4ff;
+    }
+
+    .upload-area.dragover {
+      border-color: #667eea;
+      background: #e6f0ff;
+    }
+
+    /* Charts container */
+    .chart-container {
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .chart-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    /* Filtros */
+    .filters-row {
+      display: flex;
+      gap: 16px;
+      align-items: end;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .filter-group {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .container { padding: 16px; }
+      .card { padding: 16px; }
+      .form-row { flex-direction: column; }
+      .form-row > * { min-width: auto; }
+      .filters-row { flex-direction: column; }
+      .filter-group { min-width: auto; }
+    }
+
+    /* Animações */
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .slide-in {
+      animation: slideIn 0.3s ease;
+    }
+
+    /* Estados de loading */
+    .loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    /* Notificações toast */
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      transform: translateX(400px);
+      transition: transform 0.3s ease;
+    }
+
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    .toast-success { border-left: 4px solid #48bb78; }
+    .toast-error { border-left: 4px solid #e53e3e; }
+    .toast-info { border-left: 4px solid #4299e1; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-content">
+    <h1>📊 Follow-up de Indicações Pro</h1>
+    <div class="stats-header">
+      <div class="stat-item">
+        <span class="stat-number" id="totalLeads">0</span>
+        <span>Total Leads</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" id="leadsHoje">0</span>
+        <span>Para Hoje</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" id="leadsAtrasados">0</span>
+        <span>Atrasados</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <!-- Card de Importação/Exportação -->
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">📁 Gerenciar Dados</h2>
+    </div>
+    <div class="form-row">
+      <button id="btnExportBase" class="btn btn-secondary">📤 Exportar Base</button>
+      <button id="btnExportRel" class="btn btn-secondary">📊 Exportar Relatórios</button>
+      <div class="upload-area">
+        <label for="fileCsv">📥 Importar CSV (UTF-8)</label>
+        <input type="file" id="fileCsv" accept=".csv" style="margin-top: 8px"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-main">
+    <!-- Painel Principal -->
+    <div>
+      <!-- Novo Lead -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">➕ Nova Indicação</h2>
+        </div>
+        <div class="grid grid-2">
+          <div class="form-group">
+            <label>Nome *</label>
+            <input id="nome" placeholder="Nome completo do lead"/>
+          </div>
+          <div class="form-group">
+            <label>Telefone / WhatsApp</label>
+            <input id="telefone" placeholder="(11) 99999-9999"/>
+          </div>
+          <div class="form-group">
+            <label>Canal de Origem</label>
+            <input id="canal" placeholder="Instagram, LinkedIn, Feira..."/>
+          </div>
+          <div class="form-group">
+            <label>Fonte Específica</label>
+            <input id="origem" placeholder="@usuario, campanha XYZ"/>
+          </div>
+          <div class="form-group">
+            <label>Tags</label>
+            <input id="tags" placeholder="vip, urgente, potencial-alto"/>
+          </div>
+          <div class="form-group">
+            <label>Status Inicial</label>
+            <select id="status">
+              <option>Novo</option>
+              <option>Em conversa</option>
+              <option>Aguardando retorno</option>
+              <option>Proposta enviada</option>
+              <option>Negociação</option>
+              <option>Fechado</option>
+              <option>Não tem interesse</option>
+            </select>
+          </div>
+          <div class="form-group" style="grid-column: 1/-1;">
+            <label>Observações Iniciais</label>
+            <textarea id="obs" placeholder="Descreva o contexto, necessidades, interesse demonstrado..."></textarea>
+          </div>
+        </div>
+        <button id="btnAdd" class="btn btn-primary">Adicionar à Lista</button>
+      </div>
+
+      <!-- Lista de Leads -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">📋 Agenda de Follow-up</h2>
+        </div>
+        <div class="filters-row">
+          <div class="filter-group">
+            <label>Filtrar por Vencimento</label>
+            <select id="filtroVenc">
+              <option>Todos</option>
+              <option>Atrasados</option>
+              <option>Hoje</option>
+              <option>Próximos 3 dias</option>
+              <option>Próximos 7 dias</option>
+              <option>Esta semana</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Status</label>
+            <select id="filtroStatus">
+              <option>Todos</option>
+              <option>Novo</option>
+              <option>Em conversa</option>
+              <option>Aguardando retorno</option>
+              <option>Proposta enviada</option>
+              <option>Negociação</option>
+              <option>Fechado</option>
+              <option>Não tem interesse</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Buscar Nome/Telefone</label>
+            <input id="searchTerm" placeholder="Digite para buscar..."/>
+          </div>
+        </div>
+        <div id="totalInfo" style="margin-bottom: 16px; color: #4a5568; font-weight: 500;"></div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Status</th>
+                <th>Próximo Contato</th>
+                <th>Criado</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Painel Lateral -->
+    <div>
+      <!-- Detalhes do Lead -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">👤 Detalhes do Lead</h2>
+        </div>
+        <div id="leadBox" style="text-align: center; color: #718096; padding: 40px 20px;">
+          <p>👆 Selecione um lead na tabela para ver os detalhes</p>
+        </div>
+        <div id="leadActions" class="hidden">
+          <div class="lead-details">
+            <div class="detail-row">
+              <span class="detail-label">Nome:</span>
+              <span class="detail-value" id="dNome"></span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Telefone:</span>
+              <span class="detail-value" id="dTelefone"></span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Status:</span>
+              <span class="detail-value" id="dStatus"></span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Canal:</span>
+              <span class="detail-value" id="dCanal"></span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Próximo Contato:</span>
+              <span class="detail-value" id="dProx"></span>
+            </div>
+          </div>
+
+          <!-- Ações Rápidas -->
+          <div class="form-row" style="margin: 16px 0;">
+            <button id="btnPrimeiroContato" class="btn btn-success">🎯 1º Contato (+2 dias)</button>
+            <a id="btnWhats" class="btn btn-whatsapp" target="_blank">💬 WhatsApp</a>
+          </div>
+
+          <!-- Atualização Status -->
+          <details style="margin: 16px 0;">
+            <summary style="cursor: pointer; font-weight: 500; margin-bottom: 12px;">⚙️ Atualizar Status e Data</summary>
+            <div class="form-group">
+              <label>Novo Status</label>
+              <select id="updStatus">
+                <option>Novo</option>
+                <option>Em conversa</option>
+                <option>Aguardando retorno</option>
+                <option>Proposta enviada</option>
+                <option>Negociação</option>
+                <option>Fechado</option>
+                <option>Não tem interesse</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Próxima Data</label>
+              <input type="date" id="updProx"/>
+            </div>
+            <button id="btnSalvarLead" class="btn btn-primary">💾 Salvar Alterações</button>
+          </details>
+
+          <!-- Nova Tratativa -->
+          <div style="background: #f8fafc; padding: 16px; border-radius: 12px; margin: 16px 0;">
+            <h3 style="margin-top: 0;">📝 Nova Tratativa</h3>
+            <div class="form-group">
+              <label>Tipo de Contato</label>
+              <select id="tTipo">
+                <option>ligação</option>
+                <option>whatsapp</option>
+                <option>email</option>
+                <option>reunião</option>
+                <option>proposta</option>
+                <option>follow-up</option>
+                <option>outro</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Resumo da Conversa</label>
+              <textarea id="tResumo" placeholder="O que foi discutido? Qual o interesse? Objeções? Próximos passos?"></textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Próximo Contato</label>
+                <input type="date" id="tProx"/>
+              </div>
+              <button id="btnSalvarTratativa" class="btn btn-primary">💾 Salvar</button>
+            </div>
+          </div>
+
+          <!-- Histórico -->
+          <h3>📋 Histórico de Tratativas</h3>
+          <div style="max-height: 300px; overflow-y: auto; padding-left: 8px;" id="histContainer">
+            <!-- Histórico será inserido aqui -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Relatórios -->
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">📊 Dashboard e Relatórios</h2>
+      <div class="form-row" style="margin: 0;">
+        <select id="periodo">
+          <option>Hoje</option>
+          <option>Esta semana</option>
+          <option selected>Este mês</option>
+          <option>Este ano</option>
+        </select>
+        <button id="btnAtualizarRel" class="btn btn-secondary">🔄 Atualizar</button>
+      </div>
+    </div>
+    <div class="grid grid-3">
+      <div class="chart-container">
+        <div class="chart-title">Leads Criados</div>
+        <canvas id="chartCriados" width="300" height="200"></canvas>
+      </div>
+      <div class="chart-container">
+        <div class="chart-title">Próximos Contatos</div>
+        <canvas id="chartProximos" width="300" height="200"></canvas>
+      </div>
+      <div class="chart-container">
+        <div class="chart-title">Distribuição Status</div>
+        <canvas id="chartStatus" width="300" height="200"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast notifications -->
+<div id="toastContainer"></div>
+
+<script>
+// --------------------- Toast notifications ---------------------
+function showToast(message, type = 'info') {
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  toast.textContent = message;
+  
+  document.getElementById('toastContainer').appendChild(toast);
+  
+  setTimeout(() => toast.classList.add('show'), 100);
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+// --------------------- IndexedDB helpers ---------------------
+const DB_NAME = 'followup_pro_db';
+const DB_VERSION = 1;
+let db;
+
+function openDB(){
+  return new Promise((resolve, reject)=>{
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onupgradeneeded = (e)=>{
+      const d = e.target.result;
+      if(!d.objectStoreNames.contains('leads')){
+        const leads = d.createObjectStore('leads', {keyPath: 'id', autoIncrement:true});
+        leads.createIndex('proximo', 'proximo_contato_em', {unique:false});
+        leads.createIndex('status', 'status', {unique:false});
+        leads.createIndex('nome', 'nome', {unique:false});
+      }
+      if(!d.objectStoreNames.contains('tratativas')){
+        const trat = d.createObjectStore('tratativas', {keyPath:'id', autoIncrement:true});
+        trat.createIndex('lead_id', 'lead_id', {unique:false});
+      }
+    };
+    req.onsuccess = ()=>{ db = req.result; resolve(db); };
+    req.onerror = ()=>reject(req.error);
+  });
+}
+
+function tx(store, mode='readonly'){
+  return db.transaction(store, mode).objectStore(store);
+}
+
+function add(store, obj){
+  return new Promise((res, rej)=>{
+    const r = tx(store, 'readwrite').add(obj);
+    r.onsuccess = ()=>res(r.result);
+    r.onerror = ()=>rej(r.error);
+  });
+}
+
+function put(store, obj){
+  return new Promise((res, rej)=>{
+    const r = tx(store, 'readwrite').put(obj);
+    r.onsuccess = ()=>res(r.result);
+    r.onerror = ()=>rej(r.error);
+  });
+}
+
+function getAll(store){
+  return new Promise((res, rej)=>{
+    const r = tx(store).getAll();
+    r.onsuccess = ()=>res(r.result || []);
+    r.onerror = ()=>rej(r.error);
+  });
+}
+
+function getById(store, id){
+  return new Promise((res, rej)=>{
+    const r = tx(store).get(Number(id));
+    r.onsuccess = ()=>res(r.result);
+    r.onerror = ()=>rej(r.error);
+  });
+}
+
+// --------------------- Utils ---------------------
+const fmtDate = (iso)=> iso ? new Date(iso).toLocaleDateString('pt-BR') : '';
+const fmtDateTime = (iso)=> iso ? new Date(iso).toLocaleString('pt-BR') : '';
+const todayStr = ()=> new Date().toISOString().slice(0,10);
+const addDays = (n)=>{ const d = new Date(); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10); }
+const onlyDigits = (s)=> (s||'').replace(/\D/g,'');
+
+function waLink(phone, nome, msg){
+  let p = onlyDigits(phone);
+  if(p && !p.startsWith('55') && (p.length===10 || p.length===11)) p = '55'+p;
+  const defaultMsg = `Oi ${nome || 'amigo(a)'}, aqui é da equipe da APVS. Vi que você tem interesse em nossa Proteção Veicular. Podemos conversar?`;
+  return p ? `https://wa.me/${p}?text=${encodeURIComponent(msg || defaultMsg)}` : '#';
+}
+
+function getStatusClass(status) {
+  const statusMap = {
+    'Novo': 'status-novo',
+    'Em conversa': 'status-conversa',
+    'Aguardando retorno': 'status-aguardando',
+    'Proposta enviada': 'status-aguardando',
+    'Negociação': 'status-conversa',
+    'Fechado': 'status-fechado',
+    'Não tem interesse': 'status-sem-interesse'
+  };
+  return statusMap[status] || 'status-novo';
+}
+
+function getPriorityClass(lead) {
+  const today = todayStr();
+  if (!lead.proximo_contato_em) return '';
+  
+  if (lead.proximo_contato_em < today) return 'priority-high';
+  if (lead.proximo_contato_em === today) return 'priority-medium';
+  return 'priority-low';
+}
+
+function csvEscape(v){ 
+  if(v==null) return '';
+  const s = String(v);
+  return /[",\n;]/.test(s) ? `"${s.replace(/"/g,'""')}"` : s;
+}
+
+function toCSV(rows){
+  return rows.map(r=> r.map(csvEscape).join(';')).join('\n');
+}
+
+function download(filename, content){
+  const blob = new Blob([content], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
+
+// Enhanced bar chart with better styling
+function drawBarChart(canvas, labels, values, title){
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0,0,W,H);
+  
+  if (!values.length) {
+    ctx.fillStyle = '#718096';
+    ctx.font = '14px Inter';
+    ctx.textAlign = 'center';
+    ctx.fillText('Nenhum dado para exibir', W/2, H/2);
+    return;
+  }
+  
+  const pad = 40;
+  const max = Math.max(1, ...values);
+  const barW = Math.max(20, (W - pad*2) / values.length * 0.6);
+  const step = (W - pad*2) / Math.max(1, values.length);
+  
+  // Grid lines
+  ctx.strokeStyle = '#f1f5f9';
+  ctx.lineWidth = 1;
+  for(let i = 0; i <= 5; i++){
+    const y = pad + (H - pad*2) * i / 5;
+    ctx.beginPath();
+    ctx.moveTo(pad, y);
+    ctx.lineTo(W-pad, y);
+    ctx.stroke();
+  }
+  
+  // Axes
+  ctx.strokeStyle = '#e2e8f0';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(pad, pad);
+  ctx.lineTo(pad, H-pad);
+  ctx.lineTo(W-pad, H-pad);
+  ctx.stroke();
+  
+  // Bars with gradient
+  const gradient = ctx.createLinearGradient(0, pad, 0, H-pad);
+  gradient.addColorStop(0, '#667eea');
+  gradient.addColorStop(1, '#764ba2');
+  ctx.fillStyle = gradient;
+  
+  values.forEach((v,i)=>{
+    const x = pad + i*step + (step-barW)/2;
+    const h = (H - pad*2 - 10) * (v/max);
+    const y = H - pad - h;
+    
+    // Bar shadow
+    ctx.fillStyle = 'rgba(0,0,0,0.1)';
+    ctx.fillRect(x+2, y+2, barW, h);
+    
+    // Bar
+    ctx.fillStyle = gradient;
+    ctx.fillRect(x, y, barW, h);
+    
+    // Value on top
+    if(v > 0) {
+      ctx.fillStyle = '#4a5568';
+      ctx.font = 'bold 12px Inter';
+      ctx.textAlign = 'center';
+      ctx.fillText(v, x + barW/2, y - 5);
+    }
+    
+    // Label
+    ctx.fillStyle = '#718096';
+    ctx.font = '11px Inter';
+    ctx.textAlign = 'center';
+    const label = String(labels[i]);
+    const shortLabel = label.length > 8 ? label.slice(-5) : label;
+    ctx.fillText(shortLabel, x + barW/2, H - 8);
+  });
+}
+
+// Group by date helper
+function groupByDate(rows, dateKey){
+  const map = {};
+  rows.forEach(r=>{
+    const d = (r[dateKey]||'').slice(0,10);
+    if(!d) return;
+    map[d] = (map[d]||0)+1;
+  });
+  const labels = Object.keys(map).sort();
+  const values = labels.map(k=> map[k]);
+  return {labels, values};
+}
+
+// --------------------- App State ---------------------
+let selectedLeadId = null;
+
+async function updateHeaderStats() {
+  const leads = await getAll('leads');
+  const today = todayStr();
+  
+  const totalLeads = leads.length;
+  const leadsHoje = leads.filter(l => l.proximo_contato_em === today).length;
+  const leadsAtrasados = leads.filter(l => l.proximo_contato_em && l.proximo_contato_em < today).length;
+  
+  document.getElementById('totalLeads').textContent = totalLeads;
+  document.getElementById('leadsHoje').textContent = leadsHoje;
+  document.getElementById('leadsAtrasados').textContent = leadsAtrasados;
+}
+
+async function refreshTable(){
+  const venc = document.getElementById('filtroVenc').value;
+  const st = document.getElementById('filtroStatus').value;
+  const search = document.getElementById('searchTerm').value.toLowerCase().trim();
+  const tbody = document.getElementById('tbody');
+  const leads = await getAll('leads');
+  const today = todayStr();
+  
+  let rows = leads;
+  
+  // Filter by status
+  if(st !== 'Todos') rows = rows.filter(r=> (r.status||'Novo')===st);
+  
+  // Filter by date
+  if(venc !== 'Todos'){
+    if(venc==='Atrasados') rows = rows.filter(r=> r.proximo_contato_em && r.proximo_contato_em < today);
+    if(venc==='Hoje') rows = rows.filter(r=> r.proximo_contato_em === today);
+    if(venc==='Próximos 3 dias'){
+      const in3 = addDays(3);
+      rows = rows.filter(r=> r.proximo_contato_em && r.proximo_contato_em >= today && r.proximo_contato_em <= in3);
+    }
+    if(venc==='Próximos 7 dias'){
+      const in7 = addDays(7);
+      rows = rows.filter(r=> r.proximo_contato_em && r.proximo_contato_em >= today && r.proximo_contato_em <= in7);
+    }
+    if(venc==='Esta semana'){
+      const endWeek = addDays(7);
+      rows = rows.filter(r=> r.proximo_contato_em && r.proximo_contato_em >= today && r.proximo_contato_em <= endWeek);
+    }
+  }
+  
+  // Filter by search term
+  if(search) {
+    rows = rows.filter(r=> 
+      (r.nome||'').toLowerCase().includes(search) ||
+      (r.telefone||'').toLowerCase().includes(search) ||
+      (r.canal||'').toLowerCase().includes(search)
+    );
+  }
+  
+  document.getElementById('totalInfo').innerHTML = `
+    <strong>${rows.length}</strong> leads encontrados ${leads.length !== rows.length ? `(de ${leads.length} total)` : ''}
+  `;
+  
+  tbody.innerHTML = '';
+  
+  // Sort by priority (atrasados primeiro, depois hoje, depois próximos)
+  rows.sort((a,b)=> {
+    const aDate = a.proximo_contato_em || '9999-12-31';
+    const bDate = b.proximo_contato_em || '9999-12-31';
+    if(aDate < today && bDate >= today) return -1;
+    if(bDate < today && aDate >= today) return 1;
+    return aDate.localeCompare(bDate);
+  });
+  
+  rows.forEach(r=>{
+    const tr = document.createElement('tr');
+    tr.className = `slide-in ${getPriorityClass(r)}`;
+    
+    const statusPill = `<span class="status-pill ${getStatusClass(r.status)}">${r.status||'Novo'}</span>`;
+    const proximoFormatted = r.proximo_contato_em ? fmtDate(r.proximo_contato_em) : '-';
+    const criadoFormatted = fmtDate(r.criado_em);
+    
+    tr.innerHTML = `
+      <td><strong>#${r.id}</strong></td>
+      <td><strong>${r.nome||''}</strong><br><small style="color:#718096">${r.canal||'N/A'}</small></td>
+      <td>${r.telefone||'-'}</td>
+      <td>${statusPill}</td>
+      <td>${proximoFormatted}</td>
+      <td>${criadoFormatted}</td>
+      <td><button class="btn btn-secondary" onclick="selectLead(${r.id})">👁️ Ver</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+  
+  updateHeaderStats();
+}
+
+async function selectLead(id){
+  selectedLeadId = id;
+  const lead = await getById('leads', id);
+  
+  document.getElementById('leadBox').classList.add('hidden');
+  document.getElementById('leadActions').classList.remove('hidden');
+  
+  document.getElementById('dNome').textContent = lead.nome||'';
+  document.getElementById('dTelefone').textContent = lead.telefone||'-';
+  document.getElementById('dStatus').innerHTML = `<span class="status-pill ${getStatusClass(lead.status)}">${lead.status||'Novo'}</span>`;
+  document.getElementById('dCanal').textContent = lead.canal||'-';
+  document.getElementById('dProx').textContent = lead.proximo_contato_em ? fmtDate(lead.proximo_contato_em) : '-';
+  
+  document.getElementById('updStatus').value = lead.status||'Novo';
+  document.getElementById('updProx').value = lead.proximo_contato_em||todayStr();
+  
+  const msg = `Oi ${lead.nome}, aqui é da equipe da APVS. Vi que você tem interesse em nossa Proteção Veicular. Podemos conversar?`;
+  document.getElementById('btnWhats').href = waLink(lead.telefone, lead.nome, msg);
+  
+  // Load history
+  await loadHistory(id);
+}
+
+async function loadHistory(leadId) {
+  const allTrat = await getAll('tratativas');
+  const hist = allTrat.filter(t=> t.lead_id===leadId).sort((a,b)=> (b.data||'').localeCompare(a.data||''));
+  
+  const container = document.getElementById('histContainer');
+  container.innerHTML = '';
+  
+  if(hist.length === 0) {
+    container.innerHTML = '<p style="color: #718096; text-align: center; padding: 20px;">Nenhuma tratativa registrada ainda.</p>';
+    return;
+  }
+  
+  hist.forEach(h=>{
+    const item = document.createElement('div');
+    item.className = 'history-item slide-in';
+    item.innerHTML = `
+      <div class="history-type">${h.tipo}</div>
+      <div class="history-date">${fmtDateTime(h.data)}</div>
+      <div class="history-content">${h.resumo||'Sem detalhes'}</div>
+      ${h.proximo_contato_em ? `<div style="margin-top: 8px; font-size: 12px; color: #667eea;"><strong>Próximo:</strong> ${fmtDate(h.proximo_contato_em)}</div>` : ''}
+    `;
+    container.appendChild(item);
+  });
+}
+
+// --------------------- Event Handlers ---------------------
+document.getElementById('btnAdd').onclick = async ()=>{
+  const nome = document.getElementById('nome').value.trim();
+  if(!nome){ 
+    showToast('Por favor, informe o nome do lead.', 'error');
+    return; 
+  }
+  
+  document.getElementById('btnAdd').classList.add('loading');
+  
+  try {
+    const lead = {
+      nome,
+      telefone: document.getElementById('telefone').value.trim(),
+      canal: document.getElementById('canal').value.trim(),
+      origem: document.getElementById('origem').value.trim(),
+      tags: document.getElementById('tags').value.trim(),
+      observacoes: document.getElementById('obs').value.trim(),
+      status: document.getElementById('status').value,
+      criado_em: new Date().toISOString(),
+      primeira_abordagem_em: null,
+      proximo_contato_em: null
+    };
+    
+    await add('leads', lead);
+    
+    // Clear form
+    ['nome','telefone','canal','origem','tags','obs'].forEach(id=> document.getElementById(id).value='');
+    document.getElementById('status').value = 'Novo';
+    
+    await refreshTable();
+    showToast('Lead adicionado com sucesso!', 'success');
+  } catch(error) {
+    showToast('Erro ao adicionar lead.', 'error');
+  } finally {
+    document.getElementById('btnAdd').classList.remove('loading');
+  }
+};
+
+document.getElementById('btnPrimeiroContato').onclick = async ()=>{
+  if(!selectedLeadId) return;
+  
+  try {
+    const lead = await getById('leads', selectedLeadId);
+    const proximo = addDays(2);
+    
+    lead.primeira_abordagem_em = new Date().toISOString();
+    lead.proximo_contato_em = proximo;
+    lead.status = 'Em conversa';
+    
+    await put('leads', lead);
+    await add('tratativas', {
+      lead_id: selectedLeadId, 
+      data: new Date().toISOString(), 
+      tipo: 'primeiro_contato', 
+      resumo: 'Primeira abordagem realizada com sucesso.', 
+      proximo_contato_em: proximo
+    });
+    
+    await selectLead(selectedLeadId);
+    await refreshTable();
+    showToast('Primeiro contato registrado!', 'success');
+  } catch(error) {
+    showToast('Erro ao registrar contato.', 'error');
+  }
+};
+
+document.getElementById('btnSalvarLead').onclick = async ()=>{
+  if(!selectedLeadId) return;
+  
+  try {
+    const lead = await getById('leads', selectedLeadId);
+    lead.status = document.getElementById('updStatus').value;
+    lead.proximo_contato_em = document.getElementById('updProx').value || null;
+    
+    await put('leads', lead);
+    await selectLead(selectedLeadId);
+    await refreshTable();
+    showToast('Lead atualizado com sucesso!', 'success');
+  } catch(error) {
+    showToast('Erro ao atualizar lead.', 'error');
+  }
+};
+
+document.getElementById('btnSalvarTratativa').onclick = async ()=>{
+  if(!selectedLeadId) return;
+  
+  const resumo = document.getElementById('tResumo').value.trim();
+  if(!resumo) {
+    showToast('Por favor, descreva o que aconteceu no contato.', 'error');
+    return;
+  }
+  
+  try {
+    const tipo = document.getElementById('tTipo').value;
+    const prox = document.getElementById('tProx').value;
+    
+    await add('tratativas', {
+      lead_id: selectedLeadId, 
+      data: new Date().toISOString(), 
+      tipo, 
+      resumo, 
+      proximo_contato_em: prox||null
+    });
+    
+    if(prox){
+      const lead = await getById('leads', selectedLeadId);
+      lead.proximo_contato_em = prox;
+      await put('leads', lead);
+    }
+    
+    // Clear form
+    document.getElementById('tResumo').value='';
+    document.getElementById('tProx').value='';
+    
+    await selectLead(selectedLeadId);
+    await refreshTable();
+    showToast('Tratativa salva com sucesso!', 'success');
+  } catch(error) {
+    showToast('Erro ao salvar tratativa.', 'error');
+  }
+};
+
+// Filter events
+document.getElementById('filtroVenc').onchange = refreshTable;
+document.getElementById('filtroStatus').onchange = refreshTable;
+document.getElementById('searchTerm').oninput = refreshTable;
+
+// CSV Import
+document.getElementById('fileCsv').addEventListener('change', async (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  
+  try {
+    const text = await file.text();
+    const rows = text.split(/\r?\n/).filter(Boolean).map(l=> l.split(/;|,|\t/));
+    const header = (rows.shift()||[]).map(h=> h.trim().toLowerCase());
+    
+    const idx = (name)=> header.findIndex(h=> h.includes(name));
+    const iNome = idx('nome');
+    
+    if(iNome<0){ 
+      showToast('CSV precisa ter uma coluna com "nome".', 'error');
+      return; 
+    }
+    
+    const iTel = idx('tel')>=0 ? idx('tel') : idx('telefone');
+    const iCanal = idx('canal');
+    const iOrigem = idx('origem')>=0 ? idx('origem') : idx('fonte');
+    const iObs = header.findIndex(h=> h.includes('obs') || h.includes('observa'));
+    const iStatus = idx('status');
+    const iProx = header.findIndex(h=> h.includes('proximo') && h.includes('contato'));
+    
+    let imported = 0;
+    
+    for(const r of rows){
+      const nome = (r[iNome]||'').trim();
+      if(!nome) continue;
+      
+      const lead = {
+        nome,
+        telefone: (iTel>=0 ? (r[iTel]||'') : '').trim(),
+        canal: (iCanal>=0 ? (r[iCanal]||'') : '').trim(),
+        origem: (iOrigem>=0 ? (r[iOrigem]||'') : '').trim(),
+        tags: '',
+        observacoes: (iObs>=0 ? (r[iObs]||'') : '').trim(),
+        status: (iStatus>=0 ? (r[iStatus]||'Novo') : 'Novo').trim() || 'Novo',
+        criado_em: new Date().toISOString(),
+        primeira_abordagem_em: null,
+        proximo_contato_em: (iProx>=0 ? (r[iProx]||'').slice(0,10) : null) || null
+      };
+      
+      await add('leads', lead);
+      imported++;
+    }
+    
+    await refreshTable();
+    showToast(`${imported} leads importados com sucesso!`, 'success');
+  } catch(error) {
+    showToast('Erro ao importar arquivo CSV.', 'error');
+  }
+});
+
+// CSV Export
+document.getElementById('btnExportBase').onclick = async ()=>{
+  try {
+    const leads = await getAll('leads');
+    const trat = await getAll('tratativas');
+    
+    const leadsCsv = toCSV([
+      ['id','nome','telefone','canal','origem','criado_em','primeira_abordagem_em','proximo_contato_em','status','tags','observacoes'],
+      ...leads.map(l=>[l.id,l.nome,l.telefone,l.canal,l.origem,l.criado_em,l.primeira_abordagem_em,l.proximo_contato_em,l.status,l.tags,l.observacoes])
+    ]);
+    
+    const tratCsv = toCSV([
+      ['id','lead_id','data','tipo','resumo','proximo_contato_em'],
+      ...trat.map(t=>[t.id,t.lead_id,t.data,t.tipo,t.resumo,t.proximo_contato_em])
+    ]);
+    
+    download('leads_backup.csv', leadsCsv);
+    setTimeout(()=>download('tratativas_backup.csv', tratCsv), 300);
+    
+    showToast('Arquivos exportados com sucesso!', 'success');
+  } catch(error) {
+    showToast('Erro ao exportar dados.', 'error');
+  }
+};
+
+document.getElementById('btnExportRel').onclick = async ()=>{
+  try {
+    const {cri, prox, stat} = await computeReports();
+    
+    const criCsv = toCSV([['dia','qtde'], ...cri.labels.map((d,i)=>[d, cri.values[i]])]);
+    const proxCsv = toCSV([['dia','qtde'], ...prox.labels.map((d,i)=>[d, prox.values[i]])]);
+    const statCsv = toCSV([['status','qtde'], ...stat.labels.map((s,i)=>[s, stat.values[i]])]);
+    
+    download('rel_criados.csv', criCsv);
+    setTimeout(()=>download('rel_proximos.csv', proxCsv), 300);
+    setTimeout(()=>download('rel_status.csv', statCsv), 600);
+    
+    showToast('Relatórios exportados!', 'success');
+  } catch(error) {
+    showToast('Erro ao exportar relatórios.', 'error');
+  }
+};
+
+// Reports
+async function computeReports(){
+  const periodo = document.getElementById('periodo').value;
+  const leads = await getAll('leads');
+  const now = new Date();
+  let start, end;
+  
+  if(periodo==='Hoje'){
+    start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    end = new Date(start); end.setDate(end.getDate()+1);
+  }else if(periodo==='Esta semana'){
+    const day = now.getDay();
+    const monday = new Date(now); monday.setDate(now.getDate() - ((day+6)%7));
+    start = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate());
+    end = new Date(start); end.setDate(end.getDate()+7);
+  }else if(periodo==='Este ano'){
+    start = new Date(now.getFullYear(),0,1);
+    end = new Date(now.getFullYear()+1,0,1);
+  }else{
+    start = new Date(now.getFullYear(), now.getMonth(), 1);
+    end = new Date(now.getFullYear(), now.getMonth()+1, 1);
+  }
+  
+  const inRange = (iso)=> iso && (new Date(iso)>=start) && (new Date(iso)<end);
+  
+  const criados = leads.filter(l=> inRange(l.criado_em));
+  const proximos = leads.filter(l=> inRange(l.proximo_contato_em));
+  
+  const gCri = groupByDate(criados, 'criado_em');
+  const gProx = groupByDate(proximos, 'proximo_contato_em');
+  
+  const byStatus = {};
+  criados.forEach(l=> { 
+    const s = l.status||'Novo'; 
+    byStatus[s]=(byStatus[s]||0)+1; 
+  });
+  
+  const statLabels = Object.keys(byStatus);
+  const statValues = statLabels.map(k=> byStatus[k]);
+  
+  return {cri: gCri, prox: gProx, stat: {labels:statLabels, values:statValues}};
+}
+
+async function drawReports(){
+  try {
+    const {cri, prox, stat} = await computeReports();
+    
+    drawBarChart(document.getElementById('chartCriados'), cri.labels, cri.values, 'Leads Criados');
+    drawBarChart(document.getElementById('chartProximos'), prox.labels, prox.values, 'Próximos Contatos');
+    drawBarChart(document.getElementById('chartStatus'), stat.labels, stat.values, 'Status');
+  } catch(error) {
+    showToast('Erro ao gerar relatórios.', 'error');
+  }
+}
+
+document.getElementById('btnAtualizarRel').onclick = drawReports;
+
+// Drag and drop for CSV
+const uploadArea = document.querySelector('.upload-area');
+uploadArea.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  uploadArea.classList.add('dragover');
+});
+
+uploadArea.addEventListener('dragleave', () => {
+  uploadArea.classList.remove('dragover');
+});
+
+uploadArea.addEventListener('drop', (e) => {
+  e.preventDefault();
+  uploadArea.classList.remove('dragover');
+  
+  const files = e.dataTransfer.files;
+  if (files.length > 0) {
+    document.getElementById('fileCsv').files = files;
+    document.getElementById('fileCsv').dispatchEvent(new Event('change'));
+  }
+});
+
+// Initialize app
+openDB().then(()=>{
+  refreshTable();
+  drawReports();
+  showToast('Sistema carregado com sucesso!', 'success');
+}).catch(()=>{
+  showToast('Erro ao inicializar sistema.', 'error');
+});
+</script>
+</body>
+</html>
